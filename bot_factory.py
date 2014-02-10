@@ -7,9 +7,9 @@ from bot import IRCBot
 
 class IRCBotFactory(protocol.ClientFactory):
 
-	def __init__(self):#, channel, filename):
-		self.channels = []#channel
-		self.filename = 'log.txt'#filename
+	def __init__(self):
+		self.channels = []
+		self.filename = 'log.txt'
 
 	def buildProtocol(self, addr):
 		p = IRCBot()
@@ -25,7 +25,6 @@ class IRCBotFactory(protocol.ClientFactory):
 			self.channels.remove(channel)
 
 	def clientConnectionLost(self, connector, reason):
-		"""If we get disconnected, reconnect to server."""
 		connector.connect()
 
 	def clientConnectionFailed(self, connector, reason):

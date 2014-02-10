@@ -43,19 +43,17 @@ class IRCBot(irc.IRCClient):
 		user = user.split('!', 1)[0]
 		self.logger.log("<%s> %s" % (user, msg))
 
-		# Check to see if they're sending me a private message
 		if channel == self.nickname:
-			msg = "It isn't nice to whisper!  Play nice with the group."
+			msg = "pleissihoulderi."
 			self.msg(user, msg)
 			return
 
-		# Otherwise check to see if it is a message directed at me
 		if msg.startswith(self.nickname + ":"):
-			msg = "%s: I am a log bot" % user
+			msg = "%s: olen botti" % user
 			self.msg(channel, msg)
 			self.logger.log("<%s> %s" % (self.nickname, msg))
 
-	# Twisted does not have a method for INVITE
+	# Twisted IRC does not have a method for INVITE
 	def handleCommand(self, command, prefix, params):
 		if command == 'INVITE' and params[0] == self.nickname:
 			channel = params[1]
