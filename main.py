@@ -6,7 +6,7 @@ import sys
 from twisted.internet import reactor
 from twisted.python import log
 
-from bot_factory import IRCBotFactory
+from factory import IRCBotFactory
 
 if __name__ == '__main__':
 	log.startLogging(sys.stdout)
