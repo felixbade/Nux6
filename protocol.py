@@ -2,61 +2,99 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import time
 
 from twisted.words.protocols import irc
 
 from logger import MessageLogger
-
+from message import Message
 
 class IRCBot(irc.IRCClient):
 
 	nickname = "tbot"
 
+	def __init__(self, log_file_name):
+		# weird, connectionMade seems to be called before __init__
+		log_file = open(log_file_name, "a")
+		self.logger = MessageLogger(log_file)
+
 	def connectionMade(self):
 		irc.IRCClient.connectionMade(self)
-		logfile = open(self.factory.filename, "a")
-		self.logger = MessageLogger(logfile)
-		self.logger.log("Connected.")
+		print "Connected."
 
 	def connectionLost(self, reason):
 		irc.IRCClient.connectionLost(self, reason)
-		self.logger.log("Disconnected.")
-		self.logger.close()
+		print "Disconnected."
 
 	def signedOn(self):
 		for channel in self.factory.channels:
 			self.join(channel)
 
 	def joined(self, channel):
-		self.logger.log("Joined %s" % channel)
+		print "Joined %s" % channel
 		self.factory.addChannel(channel)
 
-	def invited(self, channel):
-		self.logger.log("Invited to %s" % channel)
+	def invited(self, channel, inviter):
+		print "Invited to %s by %s" % (channel, inviter)
 		self.join(channel)
 
-	def kickedFrom(self, channel):
-		self.logger.log("Kicked from %s" % channel)
+	def kickedFrom(self, channel, kicker, message):
+		print "Kicked from %s by %s (%s" % (channel, kicker, message)
 		self.factory.removeChannel(channel)
 
-	def privmsg(self, user, channel, msg):
-		user = user.split('!', 1)[0]
-		self.logger.log("<%s> %s" % (user, msg))
+	def left(self, channel):
+		print "Left %s" % channel
+		self.factory.removeChannel(channel)
+
+	def privmsg(self, prefix, channel, msg):
+		self.sender_nick = self.getNickFromPrefix(prefix)
+		self.destination_channel = channel
+		self.message = msg
 
 		if channel == self.nickname:
-			msg = "pleissihoulderi."
-			self.msg(user, msg)
-			return
+			self.is_from_channel = False
+			self.channel = None
+		else:
+			self.is_from_channel = True
+			self.channel = channel
+			self.factory.channels[channel].new_message(
+					Message(self.sender_nick, self.message))
 
-		if msg.startswith(self.nickname + ":"):
-			msg = "%s: olen botti" % user
-			self.msg(channel, msg)
-			self.logger.log("<%s> %s" % (self.nickname, msg))
+		self.commander.handle_message()
+
+	def getLastURL(self):
+		if self.channel is not None:
+			return self.factory.channels[self.channel].getLastURL()
+		else:
+			return None
+
+	def reply(self, message):
+		if self.is_from_channel:
+			to = self.destination_channel
+		else:
+			to = self.sender_nick
+		self.msg(to, message)
+
+	def getNickFromPrefix(self, prefix):
+		return prefix.split('!', 1)[0]
 
 	# Twisted IRC does not have a method for INVITE
 	def handleCommand(self, command, prefix, params):
 		if command == 'INVITE' and params[0] == self.nickname:
 			channel = params[1]
-			self.invited(channel)
+			inviter = self.getNickFromPrefix(prefix)
+			self.invited(channel, inviter)
 		else:
 			irc.IRCClient.handleCommand(self, command, prefix, params)
+
+	def lineReceived(self, line):
+		self.logger.log("-> %s" % line)
+		irc.IRCClient.lineReceived(self, line)
+
+	def sendLine(self, line):
+		line = line.encode('utf-8', "replace")
+		self.logger.log("<- %s" % line)
+		irc.IRCClient.sendLine(self, line)
+
+	def getFactoryUptimeInSeconds(self):
+		return self.factory.getUptimeInSeconds()

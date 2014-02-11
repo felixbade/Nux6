@@ -9,7 +9,7 @@ class MessageLogger:
 		self.file = file
 
 	def log(self, message):
-		timestamp = time.strftime("[%F %T]")
+		timestamp = time.strftime("%F %T")
 		self.file.write('%s %s\n' % (timestamp, message))
 		self.file.flush()
 
