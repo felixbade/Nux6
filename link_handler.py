@@ -3,10 +3,7 @@
 
 import urllib2
 
-try:
-	from BeautifulSoup import BeautifulSoup
-except ImportError:
-	from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 
 from url import getLastURL
 
@@ -29,21 +26,26 @@ def getFinalRedirect(url):
 	return urllib2.urlopen(url).geturl()
 
 def isYoutubeLink(url):
-	return '://www.youtube.com/watch' in url
+	return False # youtube info is not yet implemented
+	#return '://www.youtube.com/watch' in url
 
 def getYoutubeVideoInfo(url):
-	youtube_page = getYoutubePage(url)
+	youtube_page = getYoutubePageSoup(url)
 	title = getYoutubeVideoTitle(youtube_page)
 	duration = getYoutubeVideoDuration(youtube_page)
 	uploader = getYoutubeVideoUploader(youtube_page)
 	banner = YOUTUBE_BANNER
 	return '%s \002%s\002 (%s) by %s' % (banner, title, duration, uploader)
 
-def getYoutubePage(url):
-	return urllib2.urlopen(url).read()
+def getYoutubePageSoup(url):
+	return BeautifulSoup(urllib2.urlopen(url).read())
 
 def getYoutubeVideoTitle(youtube_page):
 	return 'Title'
+	metas = youtube_page.find_all('meta')
+	print metas[-10].__dict__.keys()
+	title = [x for x in metas if 'itemprop' in x and x['itemprop'] == 'name']
+	return title[0]['content']
 
 def getYoutubeVideoDuration(youtube_page):
 	return '0:00'
