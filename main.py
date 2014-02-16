@@ -11,5 +11,5 @@ from factory import IRCBotFactory
 if __name__ == '__main__':
 	log.startLogging(sys.stdout)
 	factory = IRCBotFactory()
-	reactor.connectTCP("irc.zah.fi", 6667, factory)
+	reactor.connectTCP('irc.zah.fi', 6667, factory)
 	reactor.run()

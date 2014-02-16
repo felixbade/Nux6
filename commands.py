@@ -9,9 +9,9 @@ def uptime(arguments, bot):
 	days = seconds / 60 / 60 / 24
 	hours = (seconds / 60 / 60) % 24
 	if days > 0:
-		reply_text = "%i days, %i hours." % (days, hours)
+		reply_text = '%i days, %i hours.' % (days, hours)
 	else:
-		reply_text = "%i hours."
+		reply_text = '%i hours.'
 	bot.reply(reply_text)
 
 def short(arguments, bot):

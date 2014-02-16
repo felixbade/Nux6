@@ -66,7 +66,7 @@ def getYoutubeVideoDuration(youtube_page):
 	return '?:??'
 
 def getYoutubeVideoUploader(youtube_page):
-	tags = youtube_page.find_all("span", class_='yt-user-name')
+	tags = youtube_page.find_all('span', class_='yt-user-name')
 	if len(tags) > 0:
 		return tags[0].text
 	else:
@@ -126,4 +126,4 @@ def getFileType(raw_http):
 		return '???'
 
 def getErrorMessage(e):
-	return "%i - %s" % (e.code, e.msg)
+	return '%i - %s' % (e.code, e.msg)

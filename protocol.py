@@ -11,39 +11,39 @@ from message import Message
 
 class IRCBot(irc.IRCClient):
 
-	nickname = "nux"
+	nickname = 'nux'
 
 	def __init__(self, log_file_name):
 		# weird, connectionMade seems to be called before __init__
-		log_file = open(log_file_name, "a")
+		log_file = open(log_file_name, 'a')
 		self.logger = MessageLogger(log_file)
 
 	def connectionMade(self):
 		irc.IRCClient.connectionMade(self)
-		print "Connected."
+		print 'Connected.'
 
 	def connectionLost(self, reason):
 		irc.IRCClient.connectionLost(self, reason)
-		print "Disconnected."
+		print 'Disconnected.'
 
 	def signedOn(self):
 		for channel in self.factory.channels:
 			self.join(channel)
 
 	def joined(self, channel):
-		print "Joined %s" % channel
+		print 'Joined %s' % channel
 		self.factory.addChannel(channel)
 
 	def invited(self, channel, inviter):
-		print "Invited to %s by %s" % (channel, inviter)
+		print 'Invited to %s by %s' % (channel, inviter)
 		self.join(channel)
 
 	def kickedFrom(self, channel, kicker, message):
-		print "Kicked from %s by %s (%s)" % (channel, kicker, message)
+		print 'Kicked from %s by %s (%s)' % (channel, kicker, message)
 		self.factory.removeChannel(channel)
 
 	def left(self, channel):
-		print "Left %s" % channel
+		print 'Left %s' % channel
 		self.factory.removeChannel(channel)
 
 	def privmsg(self, prefix, channel, msg):
@@ -88,12 +88,12 @@ class IRCBot(irc.IRCClient):
 			irc.IRCClient.handleCommand(self, command, prefix, params)
 
 	def lineReceived(self, line):
-		self.logger.log("-> %s" % line)
+		self.logger.log('-> %s' % line)
 		irc.IRCClient.lineReceived(self, line)
 
 	def sendLine(self, line):
-		line = line.encode('utf-8', "replace")
-		self.logger.log("<- %s" % line)
+		line = line.encode('utf-8', 'replace')
+		self.logger.log('<- %s' % line)
 		irc.IRCClient.sendLine(self, line)
 
 	def getFactoryUptimeInSeconds(self):
