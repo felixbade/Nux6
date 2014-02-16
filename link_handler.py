@@ -40,9 +40,6 @@ def getLinkInfo(url):
 
 def getYoutubeVideoInfo(url):
 	youtube_page = getYoutubePageSoup(url)
-	return getExistingYoutubeVideoInfo(youtube_page)
-
-def getExistingYoutubeVideoInfo(youtube_page):
 	title = getYoutubeVideoTitle(youtube_page)
 	duration = getYoutubeVideoDuration(youtube_page)
 	uploader = getYoutubeVideoUploader(youtube_page)
