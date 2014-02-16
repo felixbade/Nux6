@@ -34,5 +34,8 @@ def short(arguments, bot):
 	short_url = url_shorter.short(url, alias)
 	bot.reply(short_url)
 
+def source(arguments, bot):
+	bot.reply('https://github.com/felixbade/Nux6')
+
 def s(arguments, bot):
 	short(arguments, bot)
