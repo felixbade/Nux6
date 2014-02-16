@@ -5,7 +5,7 @@ def hasURL(text):
 	return 'http://' in text or 'https://' in text
 
 def isURL(text):
-	return text.startswith('http://') or text.startswith('https://') and ' ' not in text
+	return (text.startswith('http://') or text.startswith('https://')) and ' ' not in text
 
 def getLastURL(text):
 	for word in text.split():
