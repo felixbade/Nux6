@@ -15,6 +15,7 @@ class IRCBotFactory(protocol.ClientFactory):
 		self.born = time.time()
 		self.channels = {}
 		self.log_file_name = 'log.txt'
+		self.reconnect_wait = 300
 
 	def buildProtocol(self, addr):
 		protocol = IRCBot(self.log_file_name)
@@ -40,7 +41,8 @@ class IRCBotFactory(protocol.ClientFactory):
 
 	def clientConnectionFailed(self, connector, reason):
 		print "connection failed:", reason
-		reactor.stop()
+		print "reconnecting in %i" % self.reconnect_wait
+		time.sleep(self.reconnect_wait)
 
 	def getUptimeInSeconds(self):
 		return time.time() - self.born

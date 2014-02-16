@@ -42,10 +42,6 @@ def getYoutubePageSoup(url):
 
 def getYoutubeVideoTitle(youtube_page):
 	return 'Title'
-	metas = youtube_page.find_all('meta')
-	print metas[-10].__dict__.keys()
-	title = [x for x in metas if 'itemprop' in x and x['itemprop'] == 'name']
-	return title[0]['content']
 
 def getYoutubeVideoDuration(youtube_page):
 	return '0:00'
