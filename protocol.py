@@ -39,7 +39,7 @@ class IRCBot(irc.IRCClient):
 		self.join(channel)
 
 	def kickedFrom(self, channel, kicker, message):
-		print "Kicked from %s by %s (%s" % (channel, kicker, message)
+		print "Kicked from %s by %s (%s)" % (channel, kicker, message)
 		self.factory.removeChannel(channel)
 
 	def left(self, channel):
