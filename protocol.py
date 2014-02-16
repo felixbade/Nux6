@@ -11,7 +11,7 @@ from message import Message
 
 class IRCBot(irc.IRCClient):
 
-	nickname = "tbot"
+	nickname = "nux"
 
 	def __init__(self, log_file_name):
 		# weird, connectionMade seems to be called before __init__
