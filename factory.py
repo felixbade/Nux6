@@ -37,11 +37,12 @@ class IRCBotFactory(protocol.ClientFactory):
 			self.channels.pop(name)
 
 	def clientConnectionLost(self, connector, reason):
+		print 'Connection lost:', reason
 		connector.connect()
 
 	def clientConnectionFailed(self, connector, reason):
-		print 'connection failed:', reason
-		print 'reconnecting in %i seconds' % self.reconnect_wait
+		print 'Connection failed:', reason
+		print 'Reconnecting in %i seconds' % self.reconnect_wait
 		time.sleep(self.reconnect_wait)
 		connector.connect()
 
