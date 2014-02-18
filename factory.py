@@ -41,8 +41,9 @@ class IRCBotFactory(protocol.ClientFactory):
 
 	def clientConnectionFailed(self, connector, reason):
 		print 'connection failed:', reason
-		print 'reconnecting in %i' % self.reconnect_wait
+		print 'reconnecting in %i seconds' % self.reconnect_wait
 		time.sleep(self.reconnect_wait)
+		connector.connect()
 
 	def getUptimeInSeconds(self):
 		return time.time() - self.born
