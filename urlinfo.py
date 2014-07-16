@@ -126,6 +126,8 @@ class URLInfo:
 				return 'Connection timed out to %s' % self.getHilightedDomain()
 			elif error.reason[1] == 'nodename nor servname provided, or not known':
 				return 'Domain %s does not exist' % self.getHilightedDomain()
+            elif error.reason[1] == 'Name or service not known':
+				return 'Domain %s does not exist' % self.getHilightedDomain()
 		elif error.__class__ == socket.timeout:
 			return 'Connection timed out to %s' % self.getHilightedDomain()
 		return 'Could not connect to %s' % self.getHilightedDomain()
