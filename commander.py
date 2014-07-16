@@ -22,5 +22,5 @@ class Commander:
 				function(arguments, self.bot)
 		
 		if hasURL(message):
-            url = getLastURL(message)
-            self.bot.reply(URLInfo(url).getInfo())
+			url = getLastURL(message)
+			self.bot.reply(URLInfo(url).getInfo())

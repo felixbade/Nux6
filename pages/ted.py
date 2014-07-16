@@ -5,24 +5,24 @@ from page import Page
 
 class TED(Page):
 
-    def getBanner(self):
-        return '\033[91mTED'
+	def getBanner(self):
+		return '\033[91mTED'
 
-    def getInfo(self):
-        speaker = self.getSpeaker()
-        title = self.getTitle()
-        duration = self.getDuration()
-        return '%s: %s (%s)' % (speaker, title, duration)
+	def getInfo(self):
+		speaker = self.getSpeaker()
+		title = self.getTitle()
+		duration = self.getDuration()
+		return '%s: %s (%s)' % (speaker, title, duration)
 
-    def getSpeaker(self):
-        return self.getMetaInformation('name', 'author')
+	def getSpeaker(self):
+		return self.getMetaInformation('name', 'author')
 
-    def getTitle(self):
-        return self.getMetaInformation('property', 'og:title')
+	def getTitle(self):
+		return self.getMetaInformation('property', 'og:title')
 
-    def getDurationInSeconds(self):
-        seconds = self.getMetaInformation('property', 'video:duration')
-        try:
-            return int(seconds)
-        except:
-            return None
+	def getDurationInSeconds(self):
+		seconds = self.getMetaInformation('property', 'video:duration')
+		try:
+			return int(seconds)
+		except:
+			return None
