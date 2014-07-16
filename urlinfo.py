@@ -124,14 +124,14 @@ class URLInfo:
 			return self.getNotAWebServerMessage()
 		elif error.__class__ == urllib2.URLError:
 			if str(error.reason) == 'timed out':
-				return 'Connection timed out to %s' % self.getHilightedDomain()
+				return 'Connection timed out to %s' % self.getHilightedDomainWithPort()
 			elif error.reason[1] == 'nodename nor servname provided, or not known':
 				return 'Domain %s does not exist' % self.getHilightedDomain()
 			elif error.reason[1] == 'Name or service not known':
 				return 'Domain %s does not exist' % self.getHilightedDomain()
 		elif error.__class__ == socket.timeout:
-			return 'Connection timed out to %s' % self.getHilightedDomain()
-		return 'Could not connect to %s' % self.getHilightedDomain()
+			return 'Connection timed out to %s' % self.getHilightedDomainWithPort()
+		return 'Could not connect to %s' % self.getHilightedDomainWithPort()
 	
 	def getBanner(self):
 		site = somesites.getSiteName(self.domain)
@@ -144,8 +144,11 @@ class URLInfo:
 	def getNotAWebServerMessage(self):
 		return '%s is not a web server' % self.getHilightedDomain()
 
-	def getHilightedDomain(self):
+	def getHilightedDomainWithPort(self):
 		if self.port is None:
 			return '\x02' + self.domain.decode('idna') + '\x0f'
 		else:
 			return '\x02' + self.domain.decode('idna') + ':' + str(self.port) + '\x0f'
+	
+	def getHilightedDomain(self):
+		return '\x02' + self.domain.decode('idna') + '\x0f'
