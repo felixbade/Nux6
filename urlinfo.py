@@ -134,7 +134,9 @@ class URLInfo:
 		site = somesites.getSiteName(self.domain)
 		if site is None:
 			site = self.getHilightedDomain()
-		return '\x0314[\x03\x02%s\x0314]\x0f ' % site
+        else:
+            site = '\x02' + site
+		return '\x0314[\x03%s\x0314]\x0f ' % site
 
 	def getNotAWebServerMessage(self):
 		return '%s is not a web server' % self.getHilightedDomain()
