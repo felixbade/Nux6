@@ -140,4 +140,4 @@ class URLInfo:
 		return '%s is not a web server' % self.getHilightedDomain()
 
 	def getHilightedDomain(self):
-		return '\x02' + self.domain.decode('idna') + '\x0g'
+		return '\x02' + self.domain.decode('idna') + '\x0f'
