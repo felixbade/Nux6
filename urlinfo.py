@@ -142,7 +142,7 @@ class URLInfo:
 		return '\x0314[\x03%s\x0314]\x0f ' % site
 
 	def getNotAWebServerMessage(self):
-		return '%s is not a web server' % self.getHilightedDomain()
+		return '%s is not a web server' % self.getHilightedDomainWithPort()
 
 	def getHilightedDomainWithPort(self):
 		if self.port is None:

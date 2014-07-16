@@ -14,7 +14,7 @@ class YouTube(Page):
 			return None
 		duration = self.getDuration()
 		author = self.getAuthor() or 'an unknown user'
-		return '\033[1m%s\033[m (%s) by %s' % (title, duration, author)
+		return '\x03%s\x0f (%s) by %s' % (title, duration, author)
 
 	def getTitle(self):
 		return self.getMetaInformation('name', 'title')
