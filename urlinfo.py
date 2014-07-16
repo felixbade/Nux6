@@ -114,7 +114,7 @@ class URLInfo:
             return 'unknown file type'
 
     def getHTTPErrorMessage(self, error):
-        return self.getBanner() + '\033[31m%d - %s\033[m' % (error.code, error.msg)
+        return self.getBanner() + '\x034%d - %s\x0f' % (error.code, error.msg)
 
     def getURLErrorMessage(self, error):
         # The errors are not formatted in the same way.
@@ -134,10 +134,10 @@ class URLInfo:
         site = somesites.getSiteName(self.domain)
         if site is None:
             site = self.getHilightedDomain()
-        return '\033[90m[\033[0;1m%s\033[90m]\033[m ' % site
+        return '\x0314[\x03\x02%s\x0314]\x0f ' % site
 
     def getNotAWebServerMessage(self):
         return '%s is not a web server' % self.getHilightedDomain()
 
     def getHilightedDomain(self):
-        return '\033[1m' + self.domain.decode('idna') + '\033[m'
+        return '\x02' + self.domain.decode('idna') + '\x0g'

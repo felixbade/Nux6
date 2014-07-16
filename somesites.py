@@ -11,17 +11,17 @@ from pages.speedtest import Speedtest
 
 def getSiteName(site):
     if site == 'www.youtube.com':
-        return 'You\033[91mTube'
+        return 'You\x034Tube'
     elif site == 'www.ted.com':
-        return '\033[91mTED'
+        return '\x034TED'
     elif site.endswith('wikipedia.org'):
         return 'Wikipedia'
     elif site == 'www.iltasanomat.fi':
-        return '\033[91mIlta-Sanomat'
+        return '\x034Ilta-Sanomat'
     elif site == 'github.com':
         return 'GitHub'
     elif site == 'www.speedtest.net':
-        return '\033[94mSpeedtest.net'
+        return '\x0312Speedtest.net'
 
 def getInfo(url, soup):
     try:

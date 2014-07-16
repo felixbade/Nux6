@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import commands
-from url import hasURL
-from link_handler import link_handler
+from url import hasURL, getLastURL
+from urlinfo import URLInfo
 
 class Commander:
 
@@ -22,4 +22,5 @@ class Commander:
 				function(arguments, self.bot)
 		
 		if hasURL(message):
-			link_handler(message, self.bot)
+            url = getLastURL(message)
+            self.bot.reply(URLInfo(url).getInfo())
