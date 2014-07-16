@@ -27,9 +27,10 @@ class URLInfo:
 		domain = unicode(a.hostname, 'utf-8').encode('idna')
 		self.domain = domain
 		netloc = domain
+		self.port = a.port
 		try:
 			if a.port:
-				netloc = netloc + ':' + str(a.port)
+				netloc = netloc + ':' + str(self.port)
 		except ValueError:
 			pass
 		self.url = urlparse.SplitResult(scheme=a.scheme, netloc=netloc,
@@ -126,7 +127,7 @@ class URLInfo:
 				return 'Connection timed out to %s' % self.getHilightedDomain()
 			elif error.reason[1] == 'nodename nor servname provided, or not known':
 				return 'Domain %s does not exist' % self.getHilightedDomain()
-            elif error.reason[1] == 'Name or service not known':
+			elif error.reason[1] == 'Name or service not known':
 				return 'Domain %s does not exist' % self.getHilightedDomain()
 		elif error.__class__ == socket.timeout:
 			return 'Connection timed out to %s' % self.getHilightedDomain()
@@ -144,4 +145,7 @@ class URLInfo:
 		return '%s is not a web server' % self.getHilightedDomain()
 
 	def getHilightedDomain(self):
-		return '\x02' + self.domain.decode('idna') + '\x0f'
+		if self.port is None:
+			return '\x02' + self.domain.decode('idna') + '\x0f'
+		else:
+			return '\x02' + self.domain.decode('idna') + ':' + str(self.port) + '\x0f'
