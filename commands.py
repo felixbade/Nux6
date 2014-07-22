@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import url_shorter
+from url_shortener import shorten
 from url import isURL
 
 def uptime(arguments, bot):
@@ -31,7 +31,7 @@ def short(arguments, bot):
 	if url is None:
 		return
 
-	short_url = url_shorter.short(url, alias)
+	short_url = shorten(url, alias)
 	bot.reply(short_url)
 
 def source(arguments, bot):
