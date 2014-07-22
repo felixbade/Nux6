@@ -16,16 +16,16 @@ class Commander:
 	def handle_message(self):
 		message = self.bot.message
 		if message.startswith(self.command_prefix):
-            nocmd = False
+			nocmd = False
 			command = message.split()[0][1:]
 			arguments = message.split()[1:]
 			function = getattr(commands, command, None)
 			if function is not None:
 				function(arguments, self.bot)
-        else:
-            nocmd = True
+		else:
+			nocmd = True
 
-        if hasURL(message):
+		if hasURL(message):
 			url = getLastURL(message)
 			if len(url) > 30 and nocmd:
 				self.bot.reply(shorten(url))
