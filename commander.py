@@ -27,6 +27,6 @@ class Commander:
 
 		if hasURL(message):
 			url = getLastURL(message)
-			if len(url) > 30 and nocmd:
-				self.bot.reply(shorten(url))
 			self.bot.reply(URLInfo(url).getInfo())
+			if len(url) > 50 and nocmd:
+				self.bot.reply(shorten(url))
