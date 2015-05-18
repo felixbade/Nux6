@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+import shelve
 
 from twisted.internet import reactor, protocol
 
@@ -13,7 +14,7 @@ class IRCBotFactory(protocol.ClientFactory):
 
 	def __init__(self):
 		self.born = time.time()
-		self.channels = {}
+		self.channels = shelve.open('channels.db')
 		self.log_file_name = 'log.txt'
 		self.reconnect_wait = 300
 
@@ -31,10 +32,12 @@ class IRCBotFactory(protocol.ClientFactory):
 	def addChannel(self, name):
 		if name not in self.channels:
 			self.channels.update({name: Channel()})
+                        self.channels.sync()
 
 	def removeChannel(self, name):
 		if name in self.channels:
 			self.channels.pop(name)
+                        self.channels.sync()
 
 	def clientConnectionLost(self, connector, reason):
 		print 'Connection lost:', reason
