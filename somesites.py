@@ -5,7 +5,6 @@ import urlparse
 
 from pages.youtube import YouTube
 from pages.ted import TED
-from pages.iltasanomat import IltaSanomat
 from pages.github import GitHub
 from pages.speedtest import Speedtest
 
@@ -16,8 +15,6 @@ def getSiteName(site):
 		return '\x034TED'
 	elif site.endswith('wikipedia.org'):
 		return 'Wikipedia'
-	elif site == 'www.iltasanomat.fi':
-		return '\x034Ilta-Sanomat'
 	elif site == 'github.com':
 		return 'GitHub'
 	elif site == 'www.speedtest.net':
@@ -32,8 +29,6 @@ def getInfo(url, soup):
 			return YouTube(soup).getInfo()
 		elif domain == 'www.ted.com':
 			return TED(soup).getInfo()
-		elif domain == 'www.iltasanomat.fi':
-			return IltaSanomat(soup).getInfo()
 		elif domain == 'github.com':
 			return GitHub(soup).getInfo()
 		elif domain == 'www.speedtest.net':
