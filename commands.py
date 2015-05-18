@@ -37,5 +37,5 @@ def short(arguments, bot):
 def source(arguments, bot):
 	bot.reply('https://github.com/felixbade/Nux6')
 
-def s(arguments, bot):
+def lyli(arguments, bot):
 	short(arguments, bot)
